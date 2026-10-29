@@ -32,6 +32,18 @@ function calculateSum(tableau) {
     return somme;
 }
 
+// Функция подсчёта низких прогнозов (<= 5%)
+function countLowGrowth(tableau) {
+    let count = 0;
+    for (let i = 0; i < tableau.length; i++) {
+        if (tableau[i] <= 5) {
+            count++;
+        }
+    }
+    const percent = (count / tableau.length) * 100;
+    return { count, percent };
+}
+
 // --- Логика программы ---
 
 const imya = prompt("Введите ваше имя:");
@@ -43,17 +55,10 @@ const average = sum / prognozRosta.length;
 
 alert("Привет, " + imya + "! Средний прогнозируемый рост – " + average.toFixed(1) + "%, " + highGrowth.length + " прогнозов – высокие.");
 
-// Цикл: подсчёт низких прогнозов (<= 5%)
-let lowCount = 0;
-for (let i = 0; i < prognozRosta.length; i++) {
-    if (prognozRosta[i] <= 5) {
-        lowCount++;
-    }
-}
-const lowPercent = (lowCount / prognozRosta.length) * 100;
+const lowGrowth = countLowGrowth(prognozRosta);
 
-console.log("Доля низких прогнозов: " + lowPercent.toFixed(1) + "%");
-console.log("Количество низких прогнозов: " + lowCount);
+console.log("Доля низких прогнозов: " + lowGrowth.percent.toFixed(1) + "%");
+console.log("Количество низких прогнозов: " + lowGrowth.count);
 
 // Дополнительно: предупреждение если максимум > 50%
 if (max > 50) {
